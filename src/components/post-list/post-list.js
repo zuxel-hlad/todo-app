@@ -5,7 +5,6 @@ import "./post-list.css";
 
 const PostList = ({ posts,onDelete }) => {
   const elements = posts.map((item) => {
-    console.log(item.id)
     if (typeof item !== "object" || Object.keys(item).length === 0) {
       return false;
     } else {

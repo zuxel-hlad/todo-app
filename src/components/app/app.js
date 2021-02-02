@@ -8,7 +8,7 @@ import PostAddForm from "../post-add-form";
 import "./app.css";
 
 const generateUserId = () => {
-  return `s${(~~(Math.random()*1e8)).toString(16)}`;
+  return `s${(~~(Math.random() * 1e8)).toString(16)}`;
 };
 export default class App extends Component {
   constructor(props) {
@@ -36,6 +36,22 @@ export default class App extends Component {
       };
     });
   };
+
+  addItem = (body) => {
+    const newItem = {
+      label: body,
+      important: false,
+      id: generateUserId(),
+    };
+    this.setState(({ data }) => {
+      const newArr = [...data, newItem];
+
+      return {
+        data: newArr,
+      };
+    });
+  };
+
   render() {
     return (
       <div className="app">
@@ -45,7 +61,7 @@ export default class App extends Component {
           <PostStatusFilter />
         </div>
         <PostList onDelete={this.deleteItem} posts={this.state.data} />
-        <PostAddForm />
+        <PostAddForm onAdd={this.addItem} />
       </div>
     );
   }
