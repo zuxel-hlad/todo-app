@@ -7,6 +7,7 @@ import PostAddForm from "../post-add-form";
 
 import "./app.css";
 
+/* generate id for users */
 const generateUserId = () => {
   return `s${(~~(Math.random() * 1e8)).toString(16)}`;
 };
@@ -23,6 +24,7 @@ export default class App extends Component {
     };
   }
 
+/* delete posts on btn click */
   deleteItem = (id) => {
     this.setState(({ data }) => {
       const index = data.findIndex((elem) => elem.id === id);
@@ -37,6 +39,7 @@ export default class App extends Component {
     });
   };
 
+  /* add posts on btn click */
   addItem = (body) => {
     const newItem = {
       label: body,

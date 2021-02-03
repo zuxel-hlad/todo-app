@@ -23,7 +23,7 @@ export default class postlistitem extends Component {
   };
 
   render() {
-    const { label,onDelete } = this.props;
+    const { label, onDelete } = this.props;
     const { important } = this.state;
     const { like } = this.state;
     let classNames = "app-list-item d-flex justify-content-between";
@@ -33,7 +33,7 @@ export default class postlistitem extends Component {
     if (like) {
       classNames += " like";
     }
-    return ( 
+    return (
       <div className={classNames}>
         <span onDoubleClick={this.onLike} className="app-list-item-label">
           {label}
@@ -46,11 +46,7 @@ export default class postlistitem extends Component {
           >
             <i className="fa fa-star"></i>
           </button>
-          <button
-            className="btn-trash btn-sm"
-            type="button"
-            onClick={onDelete}
-          >
+          <button className="btn-trash btn-sm" type="button" onClick={onDelete}>
             <i className="fa fa-trash-o"></i>
           </button>
           <i className="fa fa-heart"></i>

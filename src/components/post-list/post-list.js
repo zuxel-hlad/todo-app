@@ -4,6 +4,8 @@ import { ListGroup } from "reactstrap";
 import "./post-list.css";
 
 const PostList = ({ posts,onDelete }) => {
+
+
   const elements = posts.map((item) => {
     if (typeof item !== "object" || Object.keys(item).length === 0) {
       return false;
