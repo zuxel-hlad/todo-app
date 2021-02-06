@@ -17,13 +17,13 @@ export default class App extends Component {
     this.state = {
       data: [
         {
-          label: "Going to lear English",
+          label: "Going to learn English",
           important: false,
           like: false,
           id: generateUserId(),
         },
         {
-          label: "Going to lear React",
+          label: "Going to learn React",
           important: false,
           like: false,
           id: generateUserId(),
@@ -41,6 +41,8 @@ export default class App extends Component {
           id: generateUserId(),
         },
       ],
+      term: "" /* input at the search panel component */,
+      filter: "all" /* this state sayed how to filter our posts */,
     };
   }
 
@@ -61,19 +63,21 @@ export default class App extends Component {
 
   /* add posts on btn click */
   addItem = (body) => {
-    const newItem = {
-      label: body,
-      important: false,
-      like: false,
-      id: generateUserId(),
-    };
-    this.setState(({ data }) => {
-      const newArr = [...data, newItem];
-
-      return {
-        data: newArr,
+    if (body !== "") {
+      const newItem = {
+        label: body,
+        important: false,
+        like: false,
+        id: generateUserId(),
       };
-    });
+      this.setState(({ data }) => {
+        const newArr = [...data, newItem];
+
+        return {
+          data: newArr,
+        };
+      });
+    }
   };
 
   /* enable / disable star important */
@@ -114,22 +118,52 @@ export default class App extends Component {
     });
   };
 
+  /* search post on input value */
+  searchPost = (items, term) => {
+    if (term.length === 0) {
+      return items; /* if user doesnt entered value in input, return */
+    }
+    return items.filter((item) => {
+      /* if user entered value in input, return all inludes */
+      return item.label.includes(term);
+    });
+  };
+
+  /* record to state search panel value */
+  onUpdateSearch = (term) => this.setState({ term });
+
+  /* filter posts. like/all */
+  filterPost = (items, filter) => {
+    if (filter === "like") {
+      return items.filter((item) => item.like);
+    } else {
+      return items;
+    }
+  };
+  onFIlterSelect = (filter) => {
+    this.setState({ filter });
+  };
   render() {
-    const { data } = this.state;
+    const { data, term, filter } = this.state;
 
     /* add like count and posts count to header */
     const LikedPosts = data.filter((item) => item.like).length;
     const totalPosts = data.length;
 
+    const visiblePosts = this.filterPost(this.searchPost(data, term), filter);
+
     return (
       <div className="app">
         <AppHeader allPosts={totalPosts} allLiked={LikedPosts} />
         <div className="search-panel d-flex">
-          <SearchPanel />
-          <PostStatusFilter />
+          <SearchPanel onUpdateSearch={this.onUpdateSearch} />
+          <PostStatusFilter
+            onFIlterSelect={this.onFIlterSelect}
+            filter={filter}
+          />
         </div>
         <PostList
-          posts={data}
+          posts={visiblePosts}
           onDelete={this.deleteItem}
           onToggleImportant={this.onToggleImportant}
           onToggleLiked={this.onToggleLiked}
