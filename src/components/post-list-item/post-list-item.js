@@ -7,9 +7,10 @@ const postlistitem = (props) => {
     onDelete,
     onToggleImportant /* function */,
     onToggleLiked /* function */,
-    like,
-    important,
+    like /* default false */,
+    important /* default false */,
   } = props;
+ 
   let classNames = "app-list-item d-flex justify-content-between ";
   if (important) {
     classNames += " important";
@@ -19,6 +20,7 @@ const postlistitem = (props) => {
     classNames += " like";
   }
   return (
+
     <div className={classNames}>
       <span className="app-list-item-label" onDoubleClick={onToggleLiked}>
         {label}
@@ -37,6 +39,8 @@ const postlistitem = (props) => {
         <i className="fa fa-heart"></i>
       </div>
     </div>
+
+
   );
 };
 
