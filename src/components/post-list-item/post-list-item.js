@@ -28,8 +28,7 @@ const postlistitem = (props) => {
         <button
           className="btn-star btn-sm"
           type="button"
-          onClick={onToggleImportant}
-        >
+          onClick={onToggleImportant}>
           <i className="fa fa-star"></i>
         </button>
         <button className="btn-trash btn-sm" type="button" onClick={onDelete}>
